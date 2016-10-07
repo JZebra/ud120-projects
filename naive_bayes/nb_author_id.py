@@ -46,4 +46,8 @@ print "accuracy: ", accuracy_score(predictions, labels_test)
 
 #########################################################
 
-
+# no. of Chris training emails: 7936
+# no. of Sara training emails: 7884
+# training time:  1.69 s
+# prediction time:  0.233 s
+# accuracy:  0.973265073948
