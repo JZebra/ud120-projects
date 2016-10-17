@@ -33,7 +33,9 @@ def prettyPicture(clf, X_test, y_test):
     plt.xlabel("bumpiness")
     plt.ylabel("grade")
 
+    plt.show()
     plt.savefig("test.png")
+
 
 import base64
 import json
