@@ -10,6 +10,8 @@
 import pickle
 import numpy
 import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import MinMaxScaler
 import sys
 sys.path.append("../tools/")
 from feature_format import featureFormat, targetFeatureSplit
@@ -43,6 +45,12 @@ data_dict = pickle.load( open("../final_project/final_project_dataset.pkl", "r")
 ### there's an outlier--remove it! 
 data_dict.pop("TOTAL", 0)
 
+# clean_values = []
+# for key in data_dict:
+#     if data_dict[key]["salary"] != "NaN":
+#         clean_values.append(data_dict[key]["salary"])
+
+# print sorted(clean_values)
 
 ### the input features we want to use 
 ### can be any key in the person-level dictionary (salary, director_fees, etc.) 
@@ -53,6 +61,14 @@ features_list = [poi, feature_1, feature_2]
 data = featureFormat(data_dict, features_list )
 poi, finance_features = targetFeatureSplit( data )
 
+scaled_features = MinMaxScaler().fit_transform(finance_features)
+
+test = MinMaxScaler().fit(finance_features).transform(numpy.array([200000, 1000000]))
+print test
+
+pred = KMeans(n_clusters=2).fit_predict(scaled_features)
+
+
 
 ### in the "clustering with 3 features" part of the mini-project,
 ### you'll want to change this line to 
@@ -60,7 +76,8 @@ poi, finance_features = targetFeatureSplit( data )
 ### (as it's currently written, the line below assumes 2 features)
 for f1, f2 in finance_features:
     plt.scatter( f1, f2 )
-plt.show()
+# commenting this out because it's causing problems during rendering
+# plt.show()
 
 ### cluster here; create predictions of the cluster labels
 ### for the data and store them to a list called pred
